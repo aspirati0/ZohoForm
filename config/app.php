@@ -169,7 +169,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ZohoServiceProvider::class,
-        App\Providers\ZohoTokenMiddlewareProvider::class,
     ])->toArray(),
 
     /*

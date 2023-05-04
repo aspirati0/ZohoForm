@@ -21,41 +21,44 @@ class ZohoController extends Controller
     }
 
     public function createDeal(Request $request)
-    {
-        // Валідація введених даних
-        $validatedData = $request->validate([
-            'deal_name' => 'required|string|max:255',
-            'contact_name' => 'required|string|max:255',
-            'amount' => 'required|numeric',
-            'account_name' => 'required|string|max:255',
-            'industry' => 'required|string|max:255',
-        ]);
+{
+    // ????????? ????????? ?????
+    $this->createAccessToken();
 
-        // Створення сутності Deal в Zoho
-        $dealData = [
-            'Deal_Name' => $validatedData['deal_name'],
-            'Contact_Name' => $validatedData['contact_name'],
-            'Amount' => $validatedData['amount']
-        ];
-        $dealCreated = $this->zohoService->createDeal($dealData);
+    // ????????? ????
+    $validatedData = $request->validate([
+        'deal_name' => 'required|string|max:255',
+        'contact_name' => 'required|string|max:255',
+        'amount' => 'required|numeric',
+        'account_name' => 'required|string|max:255',
+        'industry' => 'required|string|max:255',
+    ]);
 
-        // Створення сутності Account в Zoho
-        $accountData = [
-            'Account_Name' => $validatedData['account_name'],
-            'Industry' => $validatedData['industry']
-        ];
-        $accountCreated = $this->zohoService->createAccount($accountData);
+    // ????????? ???? ??? ?????
+    $dealData = [
+        'Deal_Name' => $validatedData['deal_name'],
+        'Contact_Name' => $validatedData['contact_name'],
+        'Amount' => $validatedData['amount']
+    ];
 
-        // Повернення повідомлення про успішність або невдачу
-        if ($dealCreated && $accountCreated) {
-            return redirect()->route('zoho.form')->with('success', 'Deal and Account created successfully.');
-        } else {
-            return redirect()->route('zoho.form')->with('error', 'Failed to create Deal and Account.');
-        }
+    // ????????? ???? ??? ?????????? ??????
+    $accountData = [
+        'Account_Name' => $validatedData['account_name'],
+        'Industry' => $validatedData['industry']
+    ];
+
+    // ????????? ????? ?? ????????? ?????
+    $dealCreated = $this->zohoService->createDeal($dealData, $this->accessToken);
+    $accountCreated = $this->zohoService->createAccount($accountData, $this->accessToken);
+
+    // ???????????? ??? ?????????? ????????? ????? ?? ?????????? ??????
+    if ($dealCreated && $accountCreated) {
+        return redirect()->route('zoho.form')->with('success', 'Deal and Account created successfully.');
+    } else {
+        return redirect()->route('zoho.form')->with('error', 'Failed to create Deal and Account.');
     }
 }
-
+}
 
 ?>
-
 

@@ -10,7 +10,7 @@ Route::middleware(['web'])->group(function () {
 
     Route::middleware([ZohoTokenMiddleware::class])->group(function () {
         Route::get('/zoho', [ZohoController::class, 'showForm'])->name('zoho.form');
-        Route::post('/zoho', [ZohoController::class, 'createDeal'])->name('zoho.create');
+Route::post('/zoho', [ZohoController::class, 'createDeal'])->name('zoho.create');
     });
 });
 
