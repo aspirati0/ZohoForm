@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\ZohoService;
-use App\Http\Middleware\ZohoTokenMiddleware;
 
 class ZohoController extends Controller
 {
